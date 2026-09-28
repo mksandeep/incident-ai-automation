@@ -1,0 +1,3 @@
+package com.example.incidentai;
+import org.springframework.web.bind.annotation.*;
+@RestController @RequestMapping("/api/approvals") class ApprovalController{private final Orchestrator o;ApprovalController(Orchestrator o){this.o=o;}@GetMapping("/{t}/approve")String approve(@PathVariable String t,@RequestParam(defaultValue="email")String by)throws Exception{return page(o.decide(t,true,by));}@GetMapping("/{t}/decline")String decline(@PathVariable String t,@RequestParam(defaultValue="email")String by)throws Exception{return page(o.decide(t,false,by));}private String page(IncidentJob j){return "<h2>"+j.number+"</h2><p>Status: "+j.status+"</p><p>"+(j.result==null?"No action executed":j.result)+"</p>";}}
